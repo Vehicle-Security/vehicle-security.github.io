@@ -1,10 +1,276 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>index</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle Security Research</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f7f6;
+    --surface: #ffffff;
+    --surface-soft: #eef4f2;
+    --text: #17202a;
+    --muted: #5d6b7a;
+    --line: #d7e0e7;
+    --accent: #0f766e;
+    --accent-dark: #115e59;
+    --paper: #1d4ed8;
+    --paper-dark: #1e40af;
+    --shadow: 0 18px 42px rgba(31, 41, 55, 0.08);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(244, 247, 246, 0.96)),
+      var(--bg);
+    color: var(--text);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .page {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 64px 0;
+  }
+
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    gap: 28px;
+    align-items: end;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    margin: 0 0 10px;
+    color: var(--accent-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 720px;
+    font-size: 3rem;
+    line-height: 1.06;
+    font-weight: 750;
+    letter-spacing: 0;
+  }
+
+  .intro {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  .project-panel {
+    display: flex;
+    min-height: 300px;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .panel-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .project-index {
+    color: var(--accent-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .status {
+    padding: 5px 9px;
+    border: 1px solid rgba(15, 118, 110, 0.18);
+    border-radius: 999px;
+    background: var(--surface-soft);
+    color: var(--accent-dark);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.42rem;
+    line-height: 1.28;
+    font-weight: 750;
+    letter-spacing: 0;
+  }
+
+  .project-panel p {
+    margin: 14px 0 0;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    padding: 5px 9px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: #425466;
+    font-size: 0.78rem;
+    font-weight: 650;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+
+  .button:hover,
+  .button:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .button:focus-visible {
+    outline: 3px solid rgba(29, 78, 216, 0.22);
+    outline-offset: 2px;
+  }
+
+  .button-primary {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  .button-primary:hover,
+  .button-primary:focus-visible {
+    background: var(--accent-dark);
+  }
+
+  .button-secondary {
+    border-color: rgba(29, 78, 216, 0.22);
+    background: #f8fbff;
+    color: var(--paper);
+  }
+
+  .button-secondary:hover,
+  .button-secondary:focus-visible {
+    border-color: rgba(29, 78, 216, 0.36);
+    background: #eef4ff;
+    color: var(--paper-dark);
+  }
+
+  @media (max-width: 760px) {
+    .page {
+      width: min(100% - 24px, 1120px);
+      padding: 36px 0;
+    }
+
+    .site-header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    h1 {
+      font-size: 2.15rem;
+      line-height: 1.12;
+    }
+
+    .project-panel {
+      min-height: auto;
+      padding: 20px;
+    }
+
+    .actions {
+      flex-direction: column;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>
 </head>
-<body><p><a href='https://vehicle-security.github.io/shared-iot.html'>shared-iot</a></p>
-<p>&nbsp;</p>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Research Projects</p>
+        <h1>Vehicle Security Research</h1>
+      </div>
+      <p class="intro">
+        A collection of security research projects, papers, and supporting technical reports.
+      </p>
+    </header>
+
+    <section class="projects" aria-label="Research projects">
+      <article class="project-panel">
+        <div class="panel-meta">
+          <span class="project-index">Project 01</span>
+          <span class="status">USENIX Security 2024</span>
+        </div>
+        <h2>A Security Analysis of Shared IoT Device Rental Services</h2>
+        <p>
+          Research on the security risks of shared IoT devices and rental-service ecosystems.
+        </p>
+        <div class="tags" aria-label="Project topics">
+          <span class="tag">IoT Security</span>
+          <span class="tag">Rental Services</span>
+          <span class="tag">Security Analysis</span>
+        </div>
+        <div class="actions">
+          <a class="button button-primary" href="./shared-iot.html">Open Report</a>
+          <a class="button button-secondary" href="https://www.usenix.org/conference/usenixsecurity24/presentation/he-yi" target="_blank" rel="noopener">Open Paper</a>
+        </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
